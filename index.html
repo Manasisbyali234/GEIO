@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"/>
+    <link rel="icon" href="./assets/css/images/Sun-Icon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>GeoData</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js" defer></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDS9k5V2rEyMVVqtgHpon-Ro8hRQAatBx8&callback=generateMapFromCoordinates" defer></script> -->
+    <script src="./assets/js/script.js" defer></script>
+  </head>
+  <body>
+    <header class="topBar">GeoData</header>
+    <main>
+      <aside class="sidebar">
+        <button class="currentLocationButton "><i class="fas fa-location-arrow"></i> Use Current Location</button>
+        <span class="orSeparator">or</span>
+        <form action="submit" class="searchForm">
+          <input type="search" name="search" id="search" placeholder="Enter City Name"></input>
+          <button type="submit" class="searchButton">Search</button>
+        </form>
+        <div class="locationList">
+          <div class="citiesData"><h1 class="listTitle">Locations</h1><button class="clearCities">Clear Locations</button></div>
+        </div>
+        <div class="buttonContainer styledScrollBar"></div>
+      </aside>
+      <article class="rightSide">
+        <div class="dashboard">
+          <div class="textContainer">
+            <h4 class="geoDataWidgetTitle"><strong>GeoData Dashboard</strong><span class="geoDataWidgetTitleDetails"> - Relevant Data for Valid Location(s)</span></h4>
+            <div class="cityNameCountryDateTime">
+              <h1 class="cityName textOverflow">City Name, Country</h1>
+              <span class="currentTime">-/--/----, -:--:--</span>
+              <!-- <span class="currentTime">-day, -M, -:--:--<span class="geoDataWidgetTitleDetails">-/--/----</span></span> -->
+            </div>
+            <div class="statContainer">
+              <div class="addressField w100">Address<span class="geoDataWidgetTitleDetails"> / City / Town </span>: <span class="address statText">--</span></div>
+              <div class="regionField w100">Region: <span class="region statText">--</span></div>
+              <div class="temperatureField">Temperature: <span class="temperature statText">--° F</span></div>
+              <div class="humidityField">Humidity: <span class="humidity statText">-- %</span></div>
+              <div class="conditionDiv">Condition: 
+                <span class="condition">
+                  <img class="conditionImage" src="./assets/css/images/Sun-Icon.svg">
+                </span>
+                <span class="conditionText statText"></span>
+              </div>
+              <div class="windField">Wind: <span class="wind statText">-- mph</span></div>
+              <div class="uVField">UV Index: <span class="UV-Index statText">UVI</span></div>
+              <div class="coordinatesField basic">Coordinates: <span class="coords statText">--°--'--</span></div>
+              <div class="coordinatesField w50">Directional: <span class="coordsDirectional statText">--°--'--</span></div>
+              <div class="populationField w50">Population: <i class="fas fa-users"></i> <span class="population statText">---</span> People</div>
+            </div>
+          </div>
+          <div id="map" class="map"></div>
+        </div>
+        <div class="fiveDayForecast">
+          <h1 class="fiveDayForecastText">5-Day Forecast</h1>
+          <div class="cardContainer">
+            <div class="card cardStart">
+              <div class="dateIcon"><h4 class="date">Jan 1st</h4>
+                <img class="icon" src="./assets/css/images/Sun-Icon.svg" />
+              </div>
+                <h3 class="dayText">Monday</h3>
+                <div class="spanContainer">
+                  <div class="stat">Temperature: 
+                    <span class="cardTemperature"></span>
+                  </div>
+                  <div class="stat">Wind Speed: 
+                    <span class="cardWind"></span>
+                  </div>
+                  <div class="stat">Humidity: 
+                    <span class="cardHumidity"></span>
+                  </div>
+                </div>
+            </div>
+            <div class="card cardStart">
+              <div class="dateIcon"><h4 class="date">Jan 2nd</h4>
+                <img class="icon" src="./assets/css/images/Sun-Icon.svg">
+              </div>
+                <h3 class="dayText">Teusday</h3>
+                <div class="spanContainer">
+                  <div class="stat">Temperature: 
+                    <span class="cardTemperature"></span>
+                  </div>
+                  <div class="stat">Wind Speed: 
+                    <span class="cardWind"></span>
+                  </div>
+                  <div class="stat">Humidity: 
+                    <span class="cardHumidity"></span>
+                  </div>
+                </div>
+            </div>
+            <div class="card cardStart">
+              <div class="dateIcon"><h4 class="date">Jan 3rd</h4>
+                <img class="icon" src="./assets/css/images/Sun-Icon.svg">
+              </div>
+                <h3 class="dayText">Wednesday</h3>
+                <div class="spanContainer">
+                  <div class="stat">Temperature: 
+                    <span class="cardTemperature"></span>
+                  </div>
+                  <div class="stat">Wind Speed: 
+                    <span class="cardWind"></span>
+                  </div>
+                  <div class="stat">Humidity: 
+                    <span class="cardHumidity"></span>
+                  </div>
+                </div>
+            </div>
+            <div class="card cardStart">
+              <div class="dateIcon"><h4 class="date">Jan 4th</h4>
+                <img class="icon" src="./assets/css/images/Sun-Icon.svg">
+              </div>
+                <h3 class="dayText">Thursday</h3>
+                <div class="spanContainer">
+                  <div class="stat">Temperature: 
+                    <span class="cardTemperature"></span>
+                  </div>
+                  <div class="stat">Wind Speed: 
+                    <span class="cardWind"></span>
+                  </div>
+                  <div class="stat">Humidity: 
+                    <span class="cardHumidity"></span>
+                  </div>
+                </div>
+            </div>
+            <div class="card cardStart">
+              <div class="dateIcon"><h4 class="date">Jan 5th</h4>
+                <img class="icon" src="./assets/css/images/Sun-Icon.svg">
+              </div>
+                <h3 class="dayText">Friday</h3>
+                <div class="spanContainer">
+                  <div class="stat">Temperature: 
+                    <span class="cardTemperature"></span>
+                  </div>
+                  <div class="stat">Wind Speed: 
+                    <span class="cardWind"></span>
+                  </div>
+                  <div class="stat">Humidity: 
+                    <span class="cardHumidity"></span>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </main>
+    <footer class="bottomBar">
+      
+    </footer>
+  </body>
+</html>
